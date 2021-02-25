@@ -48,7 +48,7 @@ class TicketControl {
         this.last += 1;
         const ticket = new Ticket(this.last, null);
         this.saveDB();
-        return 'ticket' + ticket.number;
+        return 'Ticket ' + ticket.number;
     }
 
     attendTicket(desktop) {

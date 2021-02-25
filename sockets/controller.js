@@ -4,14 +4,15 @@ const ticketControl = new TicketControl();
 
 const socketController = socketClient => {
 
-    socketClient.on('disconnect', () => {
-        console.log('Disconnected client'.brightWhite, socketClient.id);
-    });
+    socketClient.emit('last-ticket', ticketControl.last);
 
-    socketClient.on('send-msg', (payload, callback) => {
-        const id = 123456;
-        callback({id: id, mss: "DB response"});
-        socketClient.broadcast.emit('send-msg', payload);
+    // socketClient.on('disconnect', () => {
+    //     console.log('Disconnected client'.brightWhite, socketClient.id);
+    // });
+
+    socketClient.on('next-ticket', (payload, callback) => {
+        const next = ticketControl.next();
+        callback(next);
     });
 };
 
