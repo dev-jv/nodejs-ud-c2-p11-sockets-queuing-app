@@ -15,14 +15,14 @@ socket.on('disconnect', () => { // "disconnect" event
     btnCreate.disabled = true;
 });
 
-socket.on('last-ticket', (ticket) => {
-    lblNewTicket.innerText = ticket;
-    console.log('last-ticket'+ ticket)
+socket.on('last-ticket', (last) => {
+    lblNewTicket.innerText = last;
+    // console.log('last-ticket: ' + last)
 });
 
 btnCreate.addEventListener('click', () => {
     socket.emit('next-ticket', null, ( ticket ) => {
         lblNewTicket.innerText = ticket;
-        console.log('From the server: next-ticket', ticket)
+        console.log('next-ticket: ', ticket);
     });
 });

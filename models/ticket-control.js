@@ -47,26 +47,33 @@ class TicketControl {
     next() {
         this.last += 1;
         const ticket = new Ticket(this.last, null);
+        this.tickets.push(ticket);
         this.saveDB();
         return 'Ticket ' + ticket.number;
     }
 
     attendTicket(desktop) {
-        if(this.tickets === 0) {
+        if(this.tickets.length === 0) {
             return null;
         }
 
-        const ticket = this.tickets.shift(); // this.tickets.shift() === this.tickets[0]
-        ticket.desktop = desktop;
-        console.log(ticket);
-        this.last4.unshift(ticket); // add ticket to beginning
+        // <> It only returns the first element, therefore it is inadequate.
+        // const ticket = this.tickets[0];
 
+        // <> In addition to returning the first element, it extracts it from the array, measuring it!
+        const ticket = this.tickets.shift(); // It is an object!..
+        ticket.desktop = desktop;
+
+        // <> It is another option?!
+        // const ticket = new Ticket(this.tickets.shift().number, desktop);
+
+        // console.log(ticket);
+        this.last4.unshift(ticket); // add ticket to beginning
+        // console.log(this.last4);
         if(this.last4.length > 4) {
             this.last4.splice(-1, 1); // delete the last
         }
-        console.log(this.last4);
         this.saveDB();
-
         return ticket;
     }
 }

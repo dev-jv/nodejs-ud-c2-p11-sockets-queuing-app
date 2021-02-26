@@ -14,9 +14,9 @@ if(!searchParams.has('desktop')) {
 }
 
 const desktop = searchParams.get('desktop');
-console.log('desktop: ' + desktop);
-
+// console.log(desktop);
 lblDesktop.innerText = desktop;
+divAlert.style.display = 'none';
 
 const socket = io();
 
@@ -30,14 +30,16 @@ socket.on('disconnect', () => { // "disconnect" event
     btnAttend.disabled = true;
 });
 
-socket.on('last-ticket', (ticket) => {
-    // lblNewTicket.innerText = ticket;
-    // console.log('last-ticket'+ ticket)
-});
+// socket.on('last-ticket', (last) => {
+// });
 
 btnAttend.addEventListener('click', () => {
-    // socket.emit('next-ticket', null, ( ticket ) => {
-    //     lblNewTicket.innerText = ticket;
-    //     console.log('From the server: next-ticket', ticket)
-    // });
+    // socket.emit('attend-ticket', desktop, ( ticket ) => {
+    socket.emit('attend-ticket', {desktop}, ( {ok, ticket} ) => {
+        if(!ok) {
+            lblTicket.innerText = '<empty>';
+            return divAlert.style.display = '';
+        }
+        lblTicket.innerText = 'Ticket ' + ticket.number;
+    });
 });
