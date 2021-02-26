@@ -35,6 +35,8 @@ socket.on('tickets-pending', (tickets) => {
         divAlert.style.display = '';
         lblPending.innerText = '';
         btnAttend.disabled = true;
+        lblTicket.innerText = '<empty>';
+
     } else {
         divAlert.style.display = 'none';
         btnAttend.disabled = false;
@@ -44,11 +46,7 @@ socket.on('tickets-pending', (tickets) => {
 
 btnAttend.addEventListener('click', () => {
     // socket.emit('attend-ticket', desktop, ( ticket ) => {
-    socket.emit('attend-ticket', {desktop}, ( {ok, ticket} ) => {
-        if(!ok) {
-            lblTicket.innerText = '<empty>';
-            return divAlert.style.display = '';
-        }
+    socket.emit('attend-ticket', {desktop}, ( ticket ) => {
         lblTicket.innerText = 'Ticket ' + ticket.number;
     });
 });

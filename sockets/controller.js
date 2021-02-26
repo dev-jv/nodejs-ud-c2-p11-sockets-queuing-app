@@ -22,7 +22,7 @@ const socketController = socketClient => {
     socketClient.on('attend-ticket', ({desktop}, callback) => {
         // console.log(desktop);
         // console.log({desktop});
-        if(!desktop) {
+        if(!desktop) { // ...
             return callback({
                 ok: false,
                 msg: 'The desktop is obligatory!'
@@ -34,17 +34,7 @@ const socketController = socketClient => {
         socketClient.emit('tickets-pending', ticketControl.tickets.length);
         socketClient.broadcast.emit('tickets-pending', ticketControl.tickets.length);
 
-        if(!ticket) {
-            return callback({
-                ok: false,
-                msg: 'There are no more tickets pending!'
-            });
-        } else {
-            callback({
-                ok: true,
-                ticket
-            })
-        }
+        callback(ticket);
     });
 };
 
