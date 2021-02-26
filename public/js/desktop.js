@@ -30,8 +30,17 @@ socket.on('disconnect', () => { // "disconnect" event
     btnAttend.disabled = true;
 });
 
-// socket.on('last-ticket', (last) => {
-// });
+socket.on('tickets-pending', (tickets) => {
+    if ( tickets === 0 ) {
+        divAlert.style.display = '';
+        lblPending.innerText = '';
+        btnAttend.disabled = true;
+    } else {
+        divAlert.style.display = 'none';
+        btnAttend.disabled = false;
+        lblPending.innerText = tickets;
+    }
+});
 
 btnAttend.addEventListener('click', () => {
     // socket.emit('attend-ticket', desktop, ( ticket ) => {

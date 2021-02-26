@@ -6,6 +6,7 @@ const socketController = socketClient => {
     // console.log(ticketControl);
     socketClient.emit('last-ticket', ticketControl.last);
     socketClient.emit('current-state', ticketControl.last4);
+    socketClient.emit('tickets-pending', ticketControl.tickets.length);
 
     // socketClient.on('disconnect', () => {
     //     console.log('Disconnected client'.brightWhite, socketClient.id);
@@ -14,6 +15,7 @@ const socketController = socketClient => {
     socketClient.on('next-ticket', (payload, callback) => {
         const next = ticketControl.next();
         callback(next);
+        socketClient.broadcast.emit('tickets-pending', ticketControl.tickets.length);
     });
 
     // socketClient.on('attend-ticket', (desktop, callback) => {
@@ -29,6 +31,8 @@ const socketController = socketClient => {
 
         const ticket = ticketControl.attendTicket(desktop);
         socketClient.broadcast.emit('current-state', ticketControl.last4);
+        socketClient.emit('tickets-pending', ticketControl.tickets.length);
+        socketClient.broadcast.emit('tickets-pending', ticketControl.tickets.length);
 
         if(!ticket) {
             return callback({
