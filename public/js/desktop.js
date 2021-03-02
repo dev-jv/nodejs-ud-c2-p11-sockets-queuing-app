@@ -20,12 +20,12 @@ divAlert.style.display = 'none';
 
 const socket = io();
 
-socket.on('connect', () => { // "connect" event
+socket.on('connect', () => {
     // console.log('Connected > Server');
     btnAttend.disabled = false;
 });
 
-socket.on('disconnect', () => { // "disconnect" event
+socket.on('disconnect', () => {
     // console.log('Disconnected > Server');
     btnAttend.disabled = true;
 });
